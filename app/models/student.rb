@@ -3,17 +3,10 @@ require_relative '../../db/config'
 # implement your Student model here
 class Student < ActiveRecord::Base
 
-  attr_accessor :first_name, :last_name, :gender, :email, :phone, :birthday
-  # validates :email, :uniqueness => true
-
-  validates :email, :format => { :with => /.+@.+\..{2,}/, 
-                                :message => "must be a valid email" }
-  validates :age
-
-
-  def initialize
-
-  end
+  validates :email, :format => { :with => /.+@.+\..{2,}/ }
+  validates :email, :uniqueness => true
+  validates :age, :exclusion => { :in => (0..3) }
+  validate :must_have_valid_number
 
   def age
     now = Time.now
@@ -22,6 +15,10 @@ class Student < ActiveRecord::Base
 
   def name
     first_name + ' ' + last_name
+  end
+
+  def must_have_valid_number  
+    errors.add(:phone, "must be 10 digits long") if phone.gsub(/\D/, '').length < 8
   end
 
 end
