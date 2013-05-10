@@ -1,13 +1,12 @@
 require_relative '../../db/config'
 
 # implement your Student model here
-class Student < ActiveRecord::Base
+class Teacher < ActiveRecord::Base
+
   validates :email, :format => { :with => /.+@.+\..{2,}/ }
   validates :email, :uniqueness => true
   validates :age, :exclusion => { :in => (0..3) }
   validate :must_have_valid_number
-  has_many :teachers
-
 
   def age
     now = Time.now
