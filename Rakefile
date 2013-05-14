@@ -42,4 +42,9 @@ end
 desc "Run the specs"
 RSpec::Core::RakeTask.new(:specs)
 
+desc 'Opens up irb terminal with dependencies loaded'
+task 'console' do
+  exec "irb  -r./app/models/teacher"
+end
+
 task :default  => :specs
